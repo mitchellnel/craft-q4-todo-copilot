@@ -1,4 +1,4 @@
-package posts_test
+package todo_test
 
 import (
 	"net/http"
@@ -7,8 +7,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
-	"mclinton.tech/craft-todo/internal/api/posts"
+	"mclinton.tech/craft-todo/internal/api/todo"
 )
+
+func TestGetAllPostsHandler(t *testing.T) {}
 
 func TestGetPostHandler(t *testing.T) {
 	testCases := []struct {
@@ -19,13 +21,14 @@ func TestGetPostHandler(t *testing.T) {
 	}{
 		{
 			name:             "Post found",
-			postTitle:        "First Post",
-			expectedStatus:   200, // show context here
-			expectedResponse: `{"post":{"title":"First Post","content":"This is the first post"}}`,
+			postTitle:        "Finish this task",
+			expectedStatus:   200,
+			expectedResponse: `{"post":{"title":"Finish this task","content":"This is a task that needs to be completed","is_complete":false}}`,
 		},
+
 		{
 			name:             "Post not found",
-			postTitle:        "Third Post",
+			postTitle:        "Non-existent post",
 			expectedStatus:   404,
 			expectedResponse: `{"error":"Post not found"}`,
 		},
@@ -43,7 +46,7 @@ func TestGetPostHandler(t *testing.T) {
 			server := gin.Default()
 
 			// initialise the API route
-			server.GET("/posts/:title", posts.GetPostHandler)
+			server.GET("/posts/:title", todo.GetTodoItemHandler)
 
 			// make the request, and record the response
 			server.ServeHTTP(rec, req)

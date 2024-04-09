@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"mclinton.tech/craft-todo/internal/api/posts"
+	"mclinton.tech/craft-todo/internal/api/todo"
 )
 
 func main() {
@@ -14,9 +14,14 @@ func main() {
 		})
 	})
 
-	server.GET("/posts", posts.GetAllPostsHandler)
+	server.GET("/items", todo.GetAllTodoItemshandler)
 
-	// TODO: Register GET /posts/:title
-	// TOOD: Register POST /posts
-	// TOOD: Register DELETE /posts/:title
+	// TODO: Register GET /items/:title
+	// TODO: Register POST /items
+	// TODO: Register PUT /items/:title
+	// TOOD: Register DELETE /items/:title
+
+	if err := server.Run(":8080"); err != nil {
+		panic(err)
+	}
 }
